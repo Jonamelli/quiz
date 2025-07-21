@@ -193,11 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         timer = setInterval(() => {
             timeLeft--;
             updateTimerDisplay();
-
-            if (timeLeft <= 10) {
-                timerElement.classList.add('warning');
-            }
-
+            if (timeLeft <= 10) timerElement.classList.add('warning');
             if (timeLeft <= 0) {
                 clearInterval(timer);
                 markAllWrong();
@@ -217,8 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function markAllWrong() {
         Array.from(answerButtonsElement.children).forEach(button => {
-            const correct = button.dataset.correct === "true";
-            setStatusClass(button, correct);
+            setStatusClass(button, button.dataset.correct === "true");
             button.disabled = true;
         });
     }
@@ -237,9 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FUNCIONES PARA COMPARTIR ---
 
-    /**
-     * Función para compartir por WhatsApp
-     */
     function shareByWhatsApp() {
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
         const phoneNumber = "722541508";
@@ -248,46 +240,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * --- FUNCIÓN NUEVA ---
-     * Función para compartir por Instagram DM.
-     * Copia el resultado al portapapeles y abre el chat con el usuario especificado.
+     * --- FUNCIÓN CORREGIDA Y MEJORADA ---
+     * Abre Instagram y luego intenta copiar el texto. Proporciona una
+     * alternativa si la copia automática falla.
      */
     function shareByInstagramDM() {
         const instagramUsername = 'fan_rrc_1913';
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
         const instagramURL = `https://ig.me/m/${instagramUsername}`;
 
-        // Intenta copiar el mensaje al portapapeles
+        // 1. Abre la ventana de Instagram inmediatamente para evitar bloqueadores de pop-ups.
+        window.open(instagramURL, '_blank');
+
+        // 2. Intenta copiar el mensaje al portapapeles.
         navigator.clipboard.writeText(message)
             .then(() => {
-                // Si tiene éxito, avisa al usuario y abre Instagram
-                alert('¡Texto copiado! Ahora se abrirá Instagram para que puedas pegarlo en el chat.');
-                window.open(instagramURL, '_blank');
+                // 3. Si tiene éxito, informa al usuario.
+                alert('Se ha abierto Instagram. El resultado se ha copiado en tu portapapeles, ¡solo tienes que pegarlo en el chat!');
             })
             .catch(err => {
-                // Si falla, informa al usuario del error
-                console.error('Error al copiar al portapapeles: ', err);
-                alert('No se pudo copiar el texto. Por favor, copia el resultado manualmente.');
-                window.open(instagramURL, '_blank');
+                // 4. Si falla, muestra un prompt para que el usuario copie manualmente.
+                console.error('Error al intentar copiar al portapapeles:', err);
+                prompt(
+                    'No se pudo copiar el texto automáticamente. Por favor, copia el mensaje de aquí y pégalo en el chat de Instagram:',
+                    message
+                );
             });
     }
 
-
     // --- ASIGNACIÓN DE EVENTOS A LOS BOTONES ---
-
-    // El botón de compartir principal y el de WhatsApp usan la función de WhatsApp
     shareButton.addEventListener('click', shareByWhatsApp);
     whatsappBtn.addEventListener('click', shareByWhatsApp);
 
-    // El botón de DM usa la nueva función de Instagram
     if (dmBtn) {
         dmBtn.addEventListener('click', shareByInstagramDM);
     }
 
-
     // --- Código de seguridad (sin cambios) ---
     document.addEventListener('contextmenu', e => e.preventDefault());
-
     document.addEventListener('keydown', e => {
         if (
             (e.ctrlKey && ['t', 'n', 'r', 'w'].includes(e.key.toLowerCase())) ||
@@ -297,7 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
         }
     });
-
     window.addEventListener('blur', () => {
         if (!gameEnded) {
             alert('¡Has cambiado de pestaña! El juego ha terminado.');
