@@ -115,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         }
     ];
-
     // --- Lógica del juego (sin cambios) ---
     startButton.addEventListener('click', startGame);
 
@@ -162,14 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedButton = e.target;
         const correct = selectedButton.dataset.correct === "true";
         if (correct) score++;
-
         Array.from(answerButtonsElement.children).forEach(button => {
             setStatusClass(button, button.dataset.correct === "true");
             button.disabled = true;
         });
-
         clearInterval(timer);
-
         setTimeout(() => {
             currentQuestionIndex++;
             setNextQuestion();
@@ -189,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function startQuestionTimer() {
         timeLeft = 120;
         updateTimerDisplay();
-
         timer = setInterval(() => {
             timeLeft--;
             updateTimerDisplay();
@@ -239,27 +234,16 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(whatsappURL, '_blank');
     }
 
-    /**
-     * --- FUNCIÓN CORREGIDA Y MEJORADA ---
-     * Abre Instagram y luego intenta copiar el texto. Proporciona una
-     * alternativa si la copia automática falla.
-     */
     function shareByInstagramDM() {
         const instagramUsername = 'fan_rrc_1913';
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
         const instagramURL = `https://ig.me/m/${instagramUsername}`;
-
-        // 1. Abre la ventana de Instagram inmediatamente para evitar bloqueadores de pop-ups.
         window.open(instagramURL, '_blank');
-
-        // 2. Intenta copiar el mensaje al portapapeles.
         navigator.clipboard.writeText(message)
             .then(() => {
-                // 3. Si tiene éxito, informa al usuario.
                 alert('Se ha abierto Instagram. El resultado se ha copiado en tu portapapeles, ¡solo tienes que pegarlo en el chat!');
             })
             .catch(err => {
-                // 4. Si falla, muestra un prompt para que el usuario copie manualmente.
                 console.error('Error al intentar copiar al portapapeles:', err);
                 prompt(
                     'No se pudo copiar el texto automáticamente. Por favor, copia el mensaje de aquí y pégalo en el chat de Instagram:',
@@ -268,13 +252,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // --- ASIGNACIÓN DE EVENTOS A LOS BOTONES ---
-    shareButton.addEventListener('click', shareByWhatsApp);
-    whatsappBtn.addEventListener('click', shareByWhatsApp);
+    // --- ASIGNACIÓN DE EVENTOS A LOS BOTONES (SECCIÓN CORREGIDA) ---
 
+    // Botón de "Compartir" (el principal) abre WhatsApp
+    if (shareButton) {
+        shareButton.addEventListener('click', shareByWhatsApp);
+    }
+
+    // Botón de "WhatsApp" abre WhatsApp
+    if (whatsappBtn) {
+        whatsappBtn.addEventListener('click', shareByWhatsApp);
+    }
+
+    // Botón de "Enviar por DM" abre Instagram
     if (dmBtn) {
         dmBtn.addEventListener('click', shareByInstagramDM);
     }
+
 
     // --- Código de seguridad (sin cambios) ---
     document.addEventListener('contextmenu', e => e.preventDefault());
