@@ -14,12 +14,17 @@ const finalMessageText = document.getElementById('final-message');
 const shareInstructions = document.getElementById('share-instructions');
 const anthemAudio = document.getElementById('anthem-audio');
 anthemAudio.volume = 0.3;
+// NUEVO: Referencia al elemento del contador
+const timerElement = document.getElementById('timer');
 
 // --- VARIABLES ---
 let shuffledQuestions, currentQuestionIndex, score = 0, gameActive = false, shareMessage = '';
+// NUEVO: Variables para el temporizador
+let timer;
+let timeLeft;
 const instagramUsername = 'fan_rrc_1913'; // ¡TU USUARIO DE INSTAGRAM VA AQUÍ!
 
-// --- PREGUNTAS ---
+// --- PREGUNTAS (Sin cambios) ---
 const questions = [
     { question: '¿Quién es el entrenador del Racing de Santander para la temporada 2024/25?', answers: [{ text: 'José Alberto López', correct: true }, { text: 'David Gallego', correct: false }, { text: 'Míchel Sánchez', correct: false }, { text: 'Rubén Baraja', correct: false }] },
     { question: '¿Cuál fue la última temporada en la que el Racing jugó en La Liga (Primera División)?', answers: [{ text: '2011-2012', correct: true }, { text: '2012-2013', correct: false }, { text: '2013-2014', correct: false }, { text: '2014-2015', correct: false }] },
@@ -30,25 +35,17 @@ const questions = [
     { question: '¿En qué temporada consiguió el Racing su último ascenso a Primera División?', answers: [{ text: '1999/2000', correct: false }, { text: '2000/2001', correct: false }, { text: '2001/2002', correct: true }, { text: '2002/2003', correct: false }] }
 ];
 
-// --- EVENT LISTENERS ---
+// --- EVENT LISTENERS (Sin cambios) ---
 startButton.addEventListener('click', startGame);
 
 shareButton.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevenimos el comportamiento por defecto del enlace
-
-    // 1. Copiamos el mensaje al portapapeles
+    e.preventDefault(); 
     navigator.clipboard.writeText(shareMessage).then(() => {
-        // 2. Avisamos al usuario
         shareButton.innerText = '¡Copiado! Abriendo Instagram...';
-
-        // 3. Abrimos el enlace correcto al DM
         window.open(`https://ig.me/m/${instagramUsername}`, '_blank');
-        
-        // Opcional: Volvemos a cambiar el texto del botón después de unos segundos
         setTimeout(() => {
             shareButton.innerText = '¡Demuestra tu resultado por DM!';
         }, 3000);
-
     }).catch(err => {
         alert('No se pudo copiar el mensaje. Por favor, abre Instagram y envíalo manualmente.');
         console.error('Error al copiar: ', err);
@@ -61,6 +58,8 @@ document.addEventListener('visibilitychange', () => {
 });
 
 function endGameDueToCheating() {
+    // NUEVO: Detener el temporizador si existe
+    clearInterval(timer);
     gameActive = false;
     stopAnthem();
     quizScreen.classList.add('hide');
@@ -101,6 +100,8 @@ function setNextQuestion() {
     resetState();
     if (currentQuestionIndex < shuffledQuestions.length) {
         showQuestion(shuffledQuestions[currentQuestionIndex]);
+        // NUEVO: Iniciar el contador para la nueva pregunta
+        startTimer();
     } else {
         showEndScreen();
     }
@@ -119,12 +120,16 @@ function showQuestion(question) {
 }
 
 function resetState() {
+    // NUEVO: Asegurarse de limpiar cualquier temporizador anterior
+    clearInterval(timer);
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
 
 function selectAnswer(e) {
+    // NUEVO: Detener el temporizador en cuanto se responde
+    clearInterval(timer);
     if (!gameActive) return;
     const selectedButton = e.target;
     if (selectedButton.dataset.correct) score++;
@@ -146,6 +151,8 @@ function updateProgressBar() {
 }
 
 function showEndScreen() {
+    // NUEVO: Detener el temporizador al final del juego
+    clearInterval(timer);
     gameActive = false;
     stopAnthem();
     quizScreen.classList.add('hide');
@@ -162,6 +169,52 @@ function showEndScreen() {
     
     shareMessage = `¡Hola! Mi resultado en el Quiz Racinguista ha sido de ${score}/${questions.length} aciertos. ¡Aúpa Racing! 💚🤍`;
 }
+
+// --- NUEVAS FUNCIONES PARA EL TEMPORIZADOR ---
+
+function startTimer() {
+    timeLeft = 120; // 2 minutos en segundos
+    updateTimerDisplay(); // Mostrar tiempo inicial
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            handleTimeUp(); // Se acabó el tiempo
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    // Añadir un cero a la izquierda si los segundos son menores de 10
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    timerElement.innerText = `${minutes}:${seconds}`;
+    
+    // Cambiar a color rojo cuando queden 10 segundos o menos
+    if (timeLeft <= 10) {
+        timerElement.style.color = 'red';
+    } else {
+        timerElement.style.color = ''; // Volver al color por defecto
+    }
+}
+
+function handleTimeUp() {
+    // Marcar la respuesta correcta y deshabilitar todas
+    Array.from(answerButtonsElement.children).forEach(button => {
+        button.classList.add(button.dataset.correct ? 'correct' : 'wrong');
+        button.disabled = true;
+    });
+
+    // Esperar un momento y pasar a la siguiente pregunta
+    setTimeout(() => {
+        currentQuestionIndex++;
+        updateProgressBar();
+        setNextQuestion();
+    }, 1500);
+}
+
 
 function getFinalMessage(score) {
     const percentage = (score / questions.length) * 100;
