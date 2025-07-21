@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Referencias a los elementos del DOM (sin cambios) ---
     const startScreen = document.getElementById('start-screen');
     const quizScreen = document.getElementById('quiz-screen');
     const endScreen = document.getElementById('end-screen');
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dmBtn = document.getElementById('dm-btn');
     const shareButtonsContainer = document.getElementById('share-buttons');
 
+    // --- Variables del juego (sin cambios) ---
     let shuffledQuestions = [];
     let currentQuestionIndex = 0;
     let score = 0;
@@ -21,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let timeLeft = 120;
     let gameEnded = false;
 
+    // --- Array de preguntas (sin cambios) ---
     const questions = [
         {
             question: "¿En qué año se fundó el Racing de Santander?",
@@ -232,26 +235,28 @@ document.addEventListener('DOMContentLoaded', () => {
         shareButtonsContainer.classList.remove('hide');
     }
 
-    function shareByInstagramDM() {
+    /**
+     * --- FUNCIÓN CORREGIDA ---
+     * Esta función crea un enlace para compartir el resultado por WhatsApp
+     * y lo abre en una nueva pestaña.
+     */
+    function shareResultByWhatsApp() {
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
-        navigator.clipboard.writeText(message)
-            .then(() => {
-                alert('Texto copiado. Ahora se abrirá Instagram.');
-                window.open('https://www.instagram.com/direct/t/fan_rrc_1913', '_blank');
-            })
-            .catch(() => alert('No se pudo copiar el texto 😢'));
-    }
-
-    shareButton.addEventListener('click', shareByInstagramDM);
-    dmBtn?.addEventListener('click', shareByInstagramDM);
-
-    whatsappBtn.addEventListener('click', () => {
-        const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
-        const phoneNumber = "722541508";
+        const phoneNumber = "722541508"; // Reemplaza con el número de teléfono deseado
         const whatsappURL = `https://wa.me/34${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappURL, '_blank');
-    });
+    }
 
+    // --- ASIGNACIÓN DE EVENTOS CORREGIDA ---
+    // Ahora, los tres botones (Compartir, WhatsApp y DM) ejecutan la misma función.
+    shareButton.addEventListener('click', shareResultByWhatsApp);
+    whatsappBtn.addEventListener('click', shareResultByWhatsApp);
+    if (dmBtn) { // Buena práctica: verificar si el botón existe antes de añadir el listener
+        dmBtn.addEventListener('click', shareResultByWhatsApp);
+    }
+
+
+    // --- Código de seguridad (sin cambios) ---
     document.addEventListener('contextmenu', e => e.preventDefault());
 
     document.addEventListener('keydown', e => {
