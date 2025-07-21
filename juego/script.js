@@ -39,79 +39,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 { text: "Riazor", correct: false }
             ]
         },
-      {
-    question: "¿Quién forma el dúo 'Sacapuntas' en el Racing de Santander?",
-    answers: [
-        { text: "Karpin & Sergio", correct: false },
-        { text: "Zigic & Munitis", correct: true},
-        { text: "Luis Enrique & Quique", correct: false },
-        { text: "Tamudo & De la Red", correct: false }
-    ]
-},
-{
-    question: "¿En qué año subió el Racing de Santander a Primera División?",
-    answers: [
-        { text: "1999/2000", correct: false },
-        { text: "2000/2001", correct: false },
-        { text: "2001/2002", correct: true },
-        { text: "2002/2003", correct: false }
-    ]
-},
-{
-  question: "¿En qué temporada se fue Pablo Torre del Racing de Santander?",
-  answers: [
-    { text: "2019/2020", correct: false },
-    { text: "2020/2021", correct: false },
-    { text: "2021/2022", correct: true },
-    { text: "2022/2023", correct: false }
-  ]
-}, 
-{
-  question: "¿Cómo se les conoce a los aficionados del Racing de Santander?",
-  answers: [
-    { text: "Santanderinos", correct: false },
-    { text: "Cantabros", correct: false },
-    { text: "Verdiblancos", correct: false },
-    { text: "Racinguistas", correct: true }
-  ]
-},
-{
-  question: "¿Quién fue el entrenador del Racing de Santander durante el ascenso a Primera División en la temporada 1992/1993?",
-  answers: [
-    { text: "José Alberto López", correct: false },
-    { text: "Héctor Cúper", correct: false },
-    { text: "Paquito", correct: true },
-    { text: "Manuel Ibarra", correct: false }
-  ]
-}, 
-{
-    question: "¿En qué año dejó la directiva Mikel Martija el Racing de Santander?",
-    answers: [
-        { text: "2023", correct: false },
-        { text: "2019", correct: false },
-        { text: "2025", correct: true },
-        { text: "2020", correct: false }
-    ]
-},
-{
-    question: "¿Quién es el abonado número 1 del Racing de Santander?",
-    answers: [
-        { text: "Javier Fernández", correct: false },
-        { text: "Carlos Ruiz", correct: false },
-        { text: "Mauricio Gómez", correct: true },
-        { text: "Pedro Martínez", correct: false }
-    ]
-},
-{
-    question: "¿Cuál es el color principal del uniforme tradicional del Racing de Santander?",
-    answers: [
-        { text: "Rojo y blanco", correct: false },
-        { text: "Azul y negro", correct: false },
-        { text: "Negro y amarillo", correct: false },
-        { text: "Verde y blanco", correct: true }
-    ]
-}
-
+        {
+            question: "¿Quién forma el dúo 'Sacapuntas' en el Racing de Santander?",
+            answers: [
+                { text: "Karpin & Sergio", correct: false },
+                { text: "Zigic & Munitis", correct: true },
+                { text: "Luis Enrique & Quique", correct: false },
+                { text: "Tamudo & De la Red", correct: false }
+            ]
+        },
+        {
+            question: "¿En qué año subió el Racing de Santander a Primera División?",
+            answers: [
+                { text: "1999/2000", correct: false },
+                { text: "2000/2001", correct: false },
+                { text: "2001/2002", correct: true },
+                { text: "2002/2003", correct: false }
+            ]
+        },
+        {
+            question: "¿En qué temporada se fue Pablo Torre del Racing de Santander?",
+            answers: [
+                { text: "2019/2020", correct: false },
+                { text: "2020/2021", correct: false },
+                { text: "2021/2022", correct: true },
+                { text: "2022/2023", correct: false }
+            ]
+        },
+        {
+            question: "¿Cómo se les conoce a los aficionados del Racing de Santander?",
+            answers: [
+                { text: "Santanderinos", correct: false },
+                { text: "Cantabros", correct: false },
+                { text: "Verdiblancos", correct: false },
+                { text: "Racinguistas", correct: true }
+            ]
+        },
+        {
+            question: "¿Quién fue el entrenador del Racing en el ascenso 92/93?",
+            answers: [
+                { text: "José Alberto López", correct: false },
+                { text: "Héctor Cúper", correct: false },
+                { text: "Paquito", correct: true },
+                { text: "Manuel Ibarra", correct: false }
+            ]
+        },
+        {
+            question: "¿En qué año dejó la directiva Mikel Martija?",
+            answers: [
+                { text: "2023", correct: false },
+                { text: "2019", correct: false },
+                { text: "2025", correct: true },
+                { text: "2020", correct: false }
+            ]
+        },
+        {
+            question: "¿Quién es el abonado número 1 del Racing?",
+            answers: [
+                { text: "Javier Fernández", correct: false },
+                { text: "Carlos Ruiz", correct: false },
+                { text: "Pedro Martínez", correct: false },
+                { text: "Mauricio Gómez", correct: true }
+            ]
+        },
+        {
+            question: "¿Cuál es el color principal del uniforme del Racing?",
+            answers: [
+                { text: "Rojo y blanco", correct: false },
+                { text: "Azul y negro", correct: false },
+                { text: "Negro y amarillo", correct: false },
+                { text: "Verde y blanco", correct: true }
+            ]
+        }
     ];
 
     startButton.addEventListener('click', startGame);
@@ -173,14 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
-    function markAllWrong() {
-        Array.from(answerButtonsElement.children).forEach(button => {
-            const correct = button.dataset.correct === "true";
-            setStatusClass(button, correct);
-            button.disabled = true;
-        });
-    }
-
     function setStatusClass(element, correct) {
         element.classList.remove('correct', 'wrong');
         element.classList.add(correct ? 'correct' : 'wrong');
@@ -220,6 +211,14 @@ document.addEventListener('DOMContentLoaded', () => {
         timerElement.innerText = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
     }
 
+    function markAllWrong() {
+        Array.from(answerButtonsElement.children).forEach(button => {
+            const correct = button.dataset.correct === "true";
+            setStatusClass(button, correct);
+            button.disabled = true;
+        });
+    }
+
     function endGame() {
         clearInterval(timer);
         gameEnded = true;
@@ -229,8 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
         finalMessageText.innerText = score >= Math.ceil(questions.length / 2)
             ? '¡Excelente! Eres un verdadero racinguista.'
             : '¡Sigue practicando! Seguro lo harás mejor la próxima vez.';
-
-        // Mostrar botones de compartir
         shareButtonsContainer.classList.remove('hide');
     }
 
@@ -249,5 +246,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const phoneNumber = "722541508";
         const whatsappURL = `https://wa.me/34${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappURL, '_blank');
+    });
+
+    // Bloquear clic derecho
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Bloquear atajos para abrir nueva pestaña, consola o inspección
+    document.addEventListener('keydown', e => {
+        if (
+            (e.ctrlKey && ['t', 'n', 'r', 'w'].includes(e.key.toLowerCase())) ||
+            e.key === 'F12' ||
+            (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase()))
+        ) {
+            e.preventDefault();
+        }
+    });
+
+    // Finalizar el juego si se cambia de pestaña
+    window.addEventListener('blur', () => {
+        if (!gameEnded) {
+            alert('¡Has cambiado de pestaña! El juego ha terminado.');
+            endGame();
+        }
     });
 });
