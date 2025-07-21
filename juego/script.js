@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressBar = document.getElementById('progress-bar');
     const scoreText = document.getElementById('score-text');
     const finalMessageText = document.getElementById('final-message');
-    
-    // --- Referencias a los botones de compartir ---
-    const instagramButton = document.getElementById('share-btn'); 
+    const instagramButton = document.getElementById('share-btn');
     const whatsappButton = document.getElementById('whatsapp-btn');
     const shareButtonsContainer = document.getElementById('share-buttons');
 
@@ -104,13 +102,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTimerDisplay() { const minutes = Math.floor(timeLeft / 60); const seconds = timeLeft % 60; timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`; }
     function markAllWrong() { Array.from(answerButtonsElement.children).forEach(button => { setStatusClass(button, button.dataset.correct === "true"); button.disabled = true; }); }
 
+    // ==========================================================
+    // === FUNCIÓN CORREGIDA ===
+    // ==========================================================
     function endGame() {
         clearInterval(timer);
         gameEnded = true;
+        
+        // OCULTAMOS LAS OTRAS DOS PANTALLAS PARA ASEGURARNOS
         quizScreen.classList.add('hide');
+        startScreen.classList.add('hide'); // Esta es la línea clave que lo arregla
+
+        // MOSTRAMOS SOLO LA PANTALLA FINAL
         endScreen.classList.remove('hide');
+        
         scoreText.innerText = `Tu puntuación: ${score} de ${questions.length}`;
-        finalMessageText.innerText = score >= Math.ceil(questions.length / 2) ? '¡Excelente! Eres un verdadero racinguista.' : '¡Sigue practicando! Seguro lo harás mejor la próxima vez.';
         shareButtonsContainer.classList.remove('hide');
     }
 
@@ -126,9 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const instagramUsername = 'fan_rrc_1913';
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
         const instagramURL = `https://ig.me/m/${instagramUsername}`;
-        
-        // Instagram NO PERMITE pre-rellenar el texto por seguridad.
-        // La mejor solución es copiarlo al portapapeles para que el usuario solo lo pegue.
         window.open(instagramURL, '_blank');
         navigator.clipboard.writeText(message)
             .then(() => alert('Se ha abierto Instagram. El resultado se ha copiado, ¡solo tienes que pegarlo en el chat!'))
@@ -146,8 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
         whatsappButton.addEventListener('click', shareByWhatsApp);
     }
 
-    // --- Código de seguridad (sin cambios) ---
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', e => { if ((e.ctrlKey && ['t', 'n', 'r', 'w'].includes(e.key.toLowerCase())) || e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase()))) { e.preventDefault(); } });
-    window.addEventListener('blur', () => { if (!gameEnded) { alert('¡Has cambiado de pestaña! El juego ha terminado.'); endGame(); } });
+    // --- Código de seguridad ---
+    window.addEventListener('blur', () => {
+        if (!gameEnded) {
+            alert('¡Has cambiado de pestaña! El juego ha terminado.');
+            endGame();
+        }
+    });
 });
