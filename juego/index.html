@@ -6,13 +6,34 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/png" sizes="32x32" href="./audio/189665.png">
     <title>Quiz Racinguista</title>
+
+    <!-- Estilos para las descripciones de los botones -->
+    <style>
+        .share-option {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .button-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- 1. Pantalla de inicio -->
+        <!-- 1. Pantalla de inicio (SECCIÓN CORREGIDA) -->
         <div id="start-screen">
+            <!-- Se mantiene el logo -->
             <img src="./audio/rrc.png" alt="Logo del Racing de Santander" id="logo">
-            <h1>¡Bienvenido al Quiz Racinguista!</h1>
+            
+            <!-- El título de bienvenida ha sido AÑADIDO DE NUEVO -->
+            <h1>¡BIENVENIDO AL QUIZ RACINGUISTA!</h1>
+
+            <!-- Se mantiene el botón de empezar -->
             <button id="start-btn" class="btn">Empezar el juego</button>
         </div>
 
@@ -31,29 +52,35 @@
         <!-- 3. Pantalla final -->
         <div id="end-screen" class="hide">
             <h2 id="score-text">Tu puntuación: 0</h2>
-            <p id="final-message">¡Gracias por jugar!</p>
-            <p id="share-instructions">Pulsa un botón para compartir tu resultado:</p>
+            <p id="final-message" class="hide"></p>
 
-            <!-- Contenedor de los botones -->
+            <!-- Contenedor de los botones con descripciones -->
             <div id="share-buttons" class="hide">
-                <!-- Botón de Instagram con id="share-btn" -->
-                <button id="share-btn" class="btn">
-                    <img src="https://images.icon-icons.com/836/PNG/512/Instagram_icon-icons.com_66804.png" alt="Instagram" class="icon"> Enviar por DM
-                </button>
-                <!-- Botón de WhatsApp con id="whatsapp-btn" -->
-                <button id="whatsapp-btn" class="btn">
-                    <img src="https://images.icon-icons.com/840/PNG/512/Whatsapp_icon-icons.com_66931.png" alt="WhatsApp" class="icon"> Compartir por WhatsApp
-                </button>
+                <div class="share-option">
+                    <button id="share-btn" class="btn">
+                        <img src="https://images.icon-icons.com/836/PNG/512/Instagram_icon-icons.com_66804.png" alt="Instagram" class="icon"> Enviar por DM
+                    </button>
+                    <p class="button-description">
+                        Copia tu resultado y abre un chat en Instagram para que lo pegues y envíes.
+                    </p>
+                </div>
+                <div class="share-option">
+                    <button id="whatsapp-btn" class="btn">
+                        <img src="https://images.icon-icons.com/840/PNG/512/Whatsapp_icon-icons.com_66931.png" alt="WhatsApp" class="icon"> Compartir por WhatsApp
+                    </button>
+                    <p class="button-description">
+                        Envía tu resultado directamente por WhatsApp.
+                    </p>
+                </div>
             </div>
         </div>
-
     </div>
 
     <!-- Overlay y audio -->
     <div id="overlay" class="overlay hide"></div>
     <audio id="anthem-audio" src="./audio/La Fuente de Cacho.mp4.mp3" loop></audio>
 
-    <!-- Script -->
+    <!-- Script (no necesita cambios) -->
     <script src="./script.js"></script>
 </body>
 </html>
