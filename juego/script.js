@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalMessageText = document.getElementById('final-message');
     const shareButton = document.getElementById('share-btn');
     const whatsappBtn = document.getElementById('whatsapp-btn');
+    const dmBtn = document.getElementById('dm-btn');
     const shareButtonsContainer = document.getElementById('share-buttons');
 
     let shuffledQuestions = [];
@@ -231,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shareButtonsContainer.classList.remove('hide');
     }
 
-    shareButton.addEventListener('click', () => {
+    function shareByInstagramDM() {
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
         navigator.clipboard.writeText(message)
             .then(() => {
@@ -239,7 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.open('https://www.instagram.com/direct/t/fan_rrc_1913', '_blank');
             })
             .catch(() => alert('No se pudo copiar el texto 😢'));
-    });
+    }
+
+    shareButton.addEventListener('click', shareByInstagramDM);
+    dmBtn?.addEventListener('click', shareByInstagramDM);
 
     whatsappBtn.addEventListener('click', () => {
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
@@ -248,10 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(whatsappURL, '_blank');
     });
 
-    // Bloquear clic derecho
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    // Bloquear atajos para abrir nueva pestaña, consola o inspección
     document.addEventListener('keydown', e => {
         if (
             (e.ctrlKey && ['t', 'n', 'r', 'w'].includes(e.key.toLowerCase())) ||
@@ -262,7 +264,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Finalizar el juego si se cambia de pestaña
     window.addEventListener('blur', () => {
         if (!gameEnded) {
             alert('¡Has cambiado de pestaña! El juego ha terminado.');
