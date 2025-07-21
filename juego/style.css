@@ -125,6 +125,15 @@ p {
     transition: width 0.5s ease-in-out;
 }
 
+/* --- ESTILO AÑADIDO PARA EL TEMPORIZADOR --- */
+.timer-text {
+    font-size: 2rem;          /* Un tamaño prominente */
+    font-weight: bold;
+    color: var(--color-white);/* Usamos el blanco para que resalte bien */
+    margin-bottom: 20px;      /* Espacio consistente con tus títulos h2 */
+    text-align: center;
+}
+
 
 /* --- Control de Pantallas --- */
 .hide {
