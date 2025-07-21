@@ -11,15 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreText = document.getElementById('score-text');
     const finalMessageText = document.getElementById('final-message');
     
-    // --- Referencias a los botones de compartir (CORREGIDO Y FINAL) ---
-    // El botón de Instagram tiene el id "share-btn" en tu HTML
+    // --- Referencias a los botones de compartir ---
     const instagramButton = document.getElementById('share-btn'); 
-    // El botón de WhatsApp tiene el id "whatsapp-btn" en tu HTML
     const whatsappButton = document.getElementById('whatsapp-btn');
-    
     const shareButtonsContainer = document.getElementById('share-buttons');
 
-    // --- Variables y preguntas del juego (sin cambios) ---
+    // --- Variables y preguntas del juego ---
     let shuffledQuestions = [];
     let currentQuestionIndex = 0;
     let score = 0;
@@ -40,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { question: "¿Cuál es el color principal del uniforme del Racing?", answers: [{ text: "Rojo y blanco", correct: false }, { text: "Azul y negro", correct: false }, { text: "Negro y amarillo", correct: false }, { text: "Verde y blanco", correct: true }] }
     ];
 
-    // --- Lógica del juego (sin cambios) ---
+    // --- Lógica del juego ---
     startButton.addEventListener('click', startGame);
 
     function startGame() {
@@ -117,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shareButtonsContainer.classList.remove('hide');
     }
 
-    // --- FUNCIONES PARA COMPARTIR (SIN CAMBIOS) ---
+    // --- FUNCIONES PARA COMPARTIR ---
     function shareByWhatsApp() {
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
         const phoneNumber = "722541508";
@@ -129,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const instagramUsername = 'fan_rrc_1913';
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
         const instagramURL = `https://ig.me/m/${instagramUsername}`;
+        
+        // Instagram NO PERMITE pre-rellenar el texto por seguridad.
+        // La mejor solución es copiarlo al portapapeles para que el usuario solo lo pegue.
         window.open(instagramURL, '_blank');
         navigator.clipboard.writeText(message)
             .then(() => alert('Se ha abierto Instagram. El resultado se ha copiado, ¡solo tienes que pegarlo en el chat!'))
@@ -139,12 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- ASIGNACIÓN DE EVENTOS FINAL Y CORRECTA ---
-    // Se asigna la función de INSTAGRAM al botón con id="share-btn"
     if (instagramButton) {
         instagramButton.addEventListener('click', shareByInstagramDM);
     }
-
-    // Se asigna la función de WHATSAPP al botón con id="whatsapp-btn"
     if (whatsappButton) {
         whatsappButton.addEventListener('click', shareByWhatsApp);
     }
