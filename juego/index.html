@@ -1,18 +1,55 @@
-<div id="quiz-screen" class="screen hide">
-    <div id="question-container">
-        <div id="progress-bar-full">
-            <div id="progress-bar"></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="./audio/189665.png">
+    <title>Quiz Racinguista</title>
+</head>
+<body>
+    <div class="container">
+        <!-- 1. Pantalla de inicio -->
+        <div id="start-screen">
+            <img src="./audio/rrc.png" alt="Logo del Racing de Santander" id="logo">
+            <h1>¡Bienvenido al Quiz Racinguista!</h1>
+            <button id="start-btn" class="btn">Empezar el juego</button>
         </div>
-        
-        <!-- ▼▼▼ PÉGALA JUSTO AQUÍ ▼▼▼ -->
-        <div id="timer" class="timer-text">2:00</div>
 
-        <h2 id="question">Aquí va la pregunta</h2>
-        <div id="answer-buttons" class="btn-grid">
-            <button class="btn">Respuesta 1</button>
-            <button class="btn">Respuesta 2</button>
-            <button class="btn">Respuesta 3</button>
-            <button class="btn">Respuesta 4</button>
+        <!-- 2. Pantalla de preguntas -->
+        <div id="quiz-screen" class="hide">
+            <div id="question-container">
+                <div id="progress-bar-full">
+                    <div id="progress-bar"></div>
+                </div>
+                <div id="timer" class="timer-text">2:00</div>
+                <h2 id="question">Aquí va la pregunta</h2>
+                <div id="answer-buttons" class="btn-grid"></div>
+            </div>
         </div>
+<!-- 3. Pantalla final (Oculta por defecto con la clase "hide") -->
+<div id="end-screen" class="hide">
+    <h2 id="score-text">Tu puntuación: 0</h2>
+    <p id="final-message">¡Gracias por jugar!</p>
+    <p id="share-instructions">Pulsa un botón para compartir tu resultado:</p>
+
+    <!-- Contenedor de los botones -->
+    <div id="share-buttons" class="hide">
+        <button id="share-btn" class="btn">
+            <img src="https://images.icon-icons.com/836/PNG/512/Instagram_icon-icons.com_66804.png" alt="Instagram" class="icon"> Enviar por DM
+        </button>
+        <button id="whatsapp-btn" class="btn">
+            <img src="https://images.icon-icons.com/840/PNG/512/Whatsapp_icon-icons.com_66931.png" alt="WhatsApp" class="icon"> Compartir por WhatsApp
+        </button>
     </div>
 </div>
+
+
+    <!-- Overlay y audio -->
+    <div id="overlay" class="overlay hide"></div>
+    <audio id="anthem-audio" src="./audio/La Fuente de Cacho.mp4.mp3" loop></audio>
+
+    <!-- Script -->
+    <script src="./script.js"></script>
+</body>
+</html>
