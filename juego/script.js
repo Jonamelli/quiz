@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dmBtn = document.getElementById('dm-btn');
     const shareButtonsContainer = document.getElementById('share-buttons');
 
-    // --- Variables del juego (sin cambios) ---
+    // --- Variables y preguntas del juego (sin cambios) ---
     let shuffledQuestions = [];
     let currentQuestionIndex = 0;
     let score = 0;
@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let timeLeft = 120;
     let gameEnded = false;
 
-    // --- Array de preguntas (sin cambios) ---
     const questions = [
         {
             question: "¿En qué año se fundó el Racing de Santander?",
@@ -117,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    // --- Lógica del juego (sin cambios) ---
     startButton.addEventListener('click', startGame);
 
     function startGame() {
@@ -229,30 +229,59 @@ document.addEventListener('DOMContentLoaded', () => {
         quizScreen.classList.add('hide');
         endScreen.classList.remove('hide');
         scoreText.innerText = `Tu puntuación: ${score} de ${questions.length}`;
-        finalMessageText.innerText = score >= Math.ceil(questions.length / 2)
-            ? '¡Excelente! Eres un verdadero racinguista.'
-            : '¡Sigue practicando! Seguro lo harás mejor la próxima vez.';
+        finalMessageText.innerText = score >= Math.ceil(questions.length / 2) ?
+            '¡Excelente! Eres un verdadero racinguista.' :
+            '¡Sigue practicando! Seguro lo harás mejor la próxima vez.';
         shareButtonsContainer.classList.remove('hide');
     }
 
+    // --- FUNCIONES PARA COMPARTIR ---
+
     /**
-     * --- FUNCIÓN CORREGIDA ---
-     * Esta función crea un enlace para compartir el resultado por WhatsApp
-     * y lo abre en una nueva pestaña.
+     * Función para compartir por WhatsApp
      */
-    function shareResultByWhatsApp() {
+    function shareByWhatsApp() {
         const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
-        const phoneNumber = "722541508"; // Reemplaza con el número de teléfono deseado
+        const phoneNumber = "722541508";
         const whatsappURL = `https://wa.me/34${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappURL, '_blank');
     }
 
-    // --- ASIGNACIÓN DE EVENTOS CORREGIDA ---
-    // Ahora, los tres botones (Compartir, WhatsApp y DM) ejecutan la misma función.
-    shareButton.addEventListener('click', shareResultByWhatsApp);
-    whatsappBtn.addEventListener('click', shareResultByWhatsApp);
-    if (dmBtn) { // Buena práctica: verificar si el botón existe antes de añadir el listener
-        dmBtn.addEventListener('click', shareResultByWhatsApp);
+    /**
+     * --- FUNCIÓN NUEVA ---
+     * Función para compartir por Instagram DM.
+     * Copia el resultado al portapapeles y abre el chat con el usuario especificado.
+     */
+    function shareByInstagramDM() {
+        const instagramUsername = 'fan_rrc_1913';
+        const message = `¡He conseguido ${score} de ${questions.length} en el Quiz del Racing! ⚽️`;
+        const instagramURL = `https://ig.me/m/${instagramUsername}`;
+
+        // Intenta copiar el mensaje al portapapeles
+        navigator.clipboard.writeText(message)
+            .then(() => {
+                // Si tiene éxito, avisa al usuario y abre Instagram
+                alert('¡Texto copiado! Ahora se abrirá Instagram para que puedas pegarlo en el chat.');
+                window.open(instagramURL, '_blank');
+            })
+            .catch(err => {
+                // Si falla, informa al usuario del error
+                console.error('Error al copiar al portapapeles: ', err);
+                alert('No se pudo copiar el texto. Por favor, copia el resultado manualmente.');
+                window.open(instagramURL, '_blank');
+            });
+    }
+
+
+    // --- ASIGNACIÓN DE EVENTOS A LOS BOTONES ---
+
+    // El botón de compartir principal y el de WhatsApp usan la función de WhatsApp
+    shareButton.addEventListener('click', shareByWhatsApp);
+    whatsappBtn.addEventListener('click', shareByWhatsApp);
+
+    // El botón de DM usa la nueva función de Instagram
+    if (dmBtn) {
+        dmBtn.addEventListener('click', shareByInstagramDM);
     }
 
 
