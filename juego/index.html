@@ -1,57 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Racinguista</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="./audio/189665.png" type="image/x-icon">
-</head>
-<body>
-    <div id="overlay" class="hide"></div>
-
-    <div class="container">
-        <div id="start-screen" class="screen">
-            <img src="./audio/rrc.png" alt="Escudo del Racing" class="logo">
-            <h1>El Gran Quiz Racinguista</h1>
-            <p>¿Cuánto sabes del equipo de nuestros amores? ¡Demuéstralo!</p>
-            <button id="start-btn" class="btn">¡Empezar a jugar!</button>
+<div id="quiz-screen" class="screen hide">
+    <div id="question-container">
+        <div id="progress-bar-full">
+            <div id="progress-bar"></div>
         </div>
+        
+        <!-- ▼▼▼ PÉGALA JUSTO AQUÍ ▼▼▼ -->
+        <div id="timer" class="timer-text">2:00</div>
 
-        <div id="quiz-screen" class="screen hide">
-            <div id="question-container">
-                <div id="progress-bar-full">
-                    <div id="progress-bar"></div>
-                </div>
-                <h2 id="question">Aquí va la pregunta</h2>
-                <div id="answer-buttons" class="btn-grid">
-                    <button class="btn">Respuesta 1</button>
-                    <button class="btn">Respuesta 2</button>
-                    <button class="btn">Respuesta 3</button>
-                    <button class="btn">Respuesta 4</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="end-screen" class="screen hide">
-            <h1>¡Juego Terminado!</h1>
-            <h2 id="score-text">Tu puntuación: 0 / 0</h2>
-            <p id="final-message">Mensaje final según tu resultado.</p>
-            <p id="share-instructions" class="hide"></p>
-            <div class="end-buttons">
-                <!-- ÚNICO BOTÓN DISPONIBLE -->
-                <a href="https://ig.me/m/fan_rrc_1913" target="_blank" id="share-btn" class="btn share-btn">
-                    ¡Demuestra tu resultado por DM!
-                </a>
-            </div>
+        <h2 id="question">Aquí va la pregunta</h2>
+        <div id="answer-buttons" class="btn-grid">
+            <button class="btn">Respuesta 1</button>
+            <button class="btn">Respuesta 2</button>
+            <button class="btn">Respuesta 3</button>
+            <button class="btn">Respuesta 4</button>
         </div>
     </div>
-
-    <audio id="anthem-audio" src="./audio/La Fuente de Cacho.mp4.mp3" loop></audio>
-    
-    <script src="script.js"></script>
-</body>
-</html>
+</div>
