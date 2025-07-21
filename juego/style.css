@@ -1,189 +1,208 @@
-/* --- Estilos Generales --- */
+/* --- Variables de color --- */
 :root {
-    --color-racing-green: #008942;
-    --color-white: #ffffff;
-    --color-black: #000000;
-    --color-correct: #28a745;
-    --color-wrong: #dc3545;
-    --color-light-gray: #f0f0f0;
+  --color-racing-green: #008942;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-correct: #28a745;
+  --color-wrong: #dc3545;
 }
 
+/* --- Reset básico y tipografía --- */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
+/* --- Estilo general del cuerpo --- */
 body {
-    background: linear-gradient(135deg, var(--color-racing-green), var(--color-black));
-    color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+  background: linear-gradient(135deg, var(--color-racing-green), var(--color-black));
+  color: var(--color-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-/* --- Contenedor Principal --- */
+/* --- Contenedor principal --- */
 .container {
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 15px;
-    padding: 20px; /* Reducimos un poco para dar más espacio en móviles */
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    text-align: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 30px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
-.logo {
-    max-width: 100px;
-    margin-bottom: 20px;
-}
-
+/* --- Encabezados y párrafos --- */
 h1 {
-    font-size: 2.2rem;
-    margin-bottom: 10px;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
 }
-
 h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  line-height: 1.5;
 }
 
-p {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-    line-height: 1.5;
+/* --- Ocultar elementos con la clase 'hide' --- */
+.hide {
+  display: none;
+}
+
+/* --- Logo --- */
+#logo {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 20px;
 }
 
 /* --- Botones --- */
 .btn-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-@media (min-width: 500px) {
-    .btn-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .btn {
-    background-color: var(--color-racing-green);
-    color: var(--color-white);
-    border: 2px solid var(--color-white);
-    border-radius: 8px;
-    padding: 15px 10px; /* Ajustamos padding vertical y horizontal */
-    font-size: 1rem;     /* Ligeramente más pequeño para consistencia */
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    /* --- CAMBIO CLAVE --- */
-    /* Hacemos que todos los botones ocupen un ancho consistente */
-    width: 90%; 
-    max-width: 350px;
-    margin: 5px auto; /* Centramos los botones */
-    display: block; /* Aseguramos que el width y margin funcionen */
+  background-color: var(--color-racing-green);
+  color: var(--color-white);
+  border: 2px solid var(--color-white);
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.btn:hover {
-    transform: scale(1.03);
+.btn:hover:not(:disabled) {
+  transform: scale(1.03);
+  background-color: #00a04b;
 }
 
-/* --- Estilos de Respuesta --- */
 .btn.correct {
-    background-color: var(--color-correct);
-    border-color: var(--color-correct);
+  background-color: var(--color-correct);
+  border-color: var(--color-correct);
 }
 
 .btn.wrong {
-    background-color: var(--color-wrong);
-    border-color: var(--color-wrong);
+  background-color: var(--color-wrong);
+  border-color: var(--color-wrong);
 }
 
 .btn:disabled {
-    cursor: not-allowed;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
+#start-btn {
+  width: 200px;      /* Más pequeño que antes */
+  padding: 10px 20px; /* Menos padding para hacerlo más pequeño */
+  font-size: 1rem;   /* Texto un poco más pequeño */
+  margin: 0 auto;
+}
 
-/* --- Barra de Progreso --- */
+/* --- Barra de progreso --- */
 #progress-bar-full {
-    width: 100%;
-    height: 10px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    margin-bottom: 20px;
+  width: 100%;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden;
 }
 
 #progress-bar {
-    height: 100%;
-    width: 0%;
-    background-color: var(--color-white);
-    border-radius: 5px;
-    transition: width 0.5s ease-in-out;
+  height: 100%;
+  width: 0%;
+  background-color: var(--color-white);
+  border-radius: 5px;
+  transition: width 0.5s ease-in-out;
 }
 
-/* --- ESTILO AÑADIDO PARA EL TEMPORIZADOR --- */
-.timer-text {
-    font-size: 2rem;          /* Un tamaño prominente */
-    font-weight: bold;
-    color: var(--color-white);/* Usamos el blanco para que resalte bien */
-    margin-bottom: 20px;      /* Espacio consistente con tus títulos h2 */
-    text-align: center;
+/* --- Temporizador --- */
+#timer {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-
-/* --- Control de Pantallas --- */
-.hide {
-    display: none;
+#timer.warning {
+  color: red;
 }
 
-/* --- Estilos para la pantalla final --- */
-.end-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-/* --- CAMBIO CLAVE PARA EL BOTÓN DE COMPARTIR --- */
-.share-btn {
-    background-color: #3897f0; 
-    border-color: #3897f0;
-    text-decoration: none;
-    font-size: 0.95rem; /* Hacemos la fuente un poco más pequeña solo en este botón */
-    line-height: 1.2;  /* Ayuda a centrar verticalmente si el texto se parte */
-    white-space: normal; /* Permite que el texto se parta en dos líneas si es necesario */
-}
-
-.share-btn:hover {
-    background-color: #2c7ac0;
-    border-color: #2c7ac0;
-}
-
-/* --- Estilos para el efecto Modal --- */
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-    z-index: 5;
-}
-
-.container.active-modal {
-    z-index: 10;
-    position: relative;
-}
-
+/* --- Pantalla final --- */
 #share-instructions {
-    font-size: 0.9rem;
-    color: #ccc;
-    margin-top: -10px;
-    margin-bottom: 20px;
-    padding: 0 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: -15px;
+  margin-bottom: 20px;
+}
+
+/* --- Contenedor y estilo botones compartir sin animación --- */
+#share-buttons {
+  display: flex;
+  justify-content: center;  /* Centra horizontalmente */
+  gap: 20px;                /* Espacio entre botones */
+  margin-top: 20px;
+}
+
+#share-buttons .btn {
+  animation: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: var(--color-racing-green);
+  border-color: var(--color-white);
+  color: var(--color-white);
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#share-buttons .btn:hover {
+  box-shadow:
+    0 0 8px 2px rgba(255, 255, 255, 0.6),
+    0 0 20px 5px rgba(255, 255, 255, 0.3);
+  transform: scale(1.08);
+}
+
+/* --- Iconos en botones --- */
+#share-buttons .icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* --- Overlay / Modal --- */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 5;
+}
+
+/* Para mostrar el modal correctamente */
+.container.active-modal {
+  z-index: 10;
+  position: relative;
 }
